@@ -13,6 +13,13 @@ public class Organizer
         
     }
 
+    public DataAnalysis Analys()
+    {
+        var counter = new DataAnalysis();
+        
+        return counter;
+    }
+    
     public void Organize()
     {
         
