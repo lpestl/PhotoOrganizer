@@ -16,4 +16,9 @@
         <PackageReference Include="coverlet.collector" Version="3.1.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\PhotoOrganizer.Cmd\PhotoOrganizer.Cmd.csproj" />
+      <ProjectReference Include="..\PhotoOrganizer.Core\PhotoOrganizer.Core.csproj" />
+    </ItemGroup>
+
 </Project>
