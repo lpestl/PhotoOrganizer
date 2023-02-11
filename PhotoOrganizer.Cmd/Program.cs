@@ -2,9 +2,20 @@
 
 using PhotoOrganizer.Core;
 
-Console.WriteLine($"[INFO] *** Start from path: {Environment.CurrentDirectory}");
+var path = Environment.CurrentDirectory;
+var argsCmd = Environment.GetCommandLineArgs();
+if (argsCmd.Any())
+{
+    foreach (var argCmd in argsCmd)
+    {
+        if (Directory.Exists(argCmd))
+            path = argCmd;
+    }
+}
 
-var organizer = new Organizer(Environment.CurrentDirectory);
+Console.WriteLine($"[INFO] *** Start from path: {path}");
+
+var organizer = new Organizer(path);
 var counter = organizer.Analys();
 
 Console.WriteLine("*** Step 1: Analysis result ***");

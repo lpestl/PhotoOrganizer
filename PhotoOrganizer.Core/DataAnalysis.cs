@@ -34,7 +34,6 @@ public class FileDataAnalysis
     public EMediaSubClassifier MediaType { get; set; } = EMediaSubClassifier.NotMedia;
     public DateTime Date { get; set; }
     public string RelativePath { get; set; }
-    public ulong Size { get; set; }
 }
 
 public class DataAnalysis

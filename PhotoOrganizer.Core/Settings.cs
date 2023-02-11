@@ -3,19 +3,19 @@
 
 namespace PhotoOrganizer.Core;
 
-public class Settings
+public static class Settings
 {
-    public List<string> ImagePrefixes { get; set; } = new List<string>
+    public static List<string> ImagePrefixes { get; set; } = new List<string>
                                                 {
                                                     // Photo
                                                     "IMG_","IMG-","JPEG_","JPEG-","P_","P-","IMAG",".P_","____",
                                                 };
-    public List<string> VideoPrefixes { get; set; } = new List<string>
+    public static List<string> VideoPrefixes { get; set; } = new List<string>
                                                 {
                                                     // Video
                                                     "VID_","VID-","V_","V-","VIDEO",
                                                 };
-    public List<string> AffectingImageExtensions { get; set; } = new List<string> 
+    public static List<string> AffectingImageExtensions { get; set; } = new List<string> 
                                                             {
                                                                 // *** Images extensions ***
                                                                 // APNG - Animated Portable Network Graphics
@@ -39,7 +39,7 @@ public class Settings
                                                                 // TIFF - Tagged Image File Format
                                                                 ".tif",".tiff",
                                                             };
-    public List<string> AffectingVideoExtensions { get; set; } = new List<string> 
+    public static List<string> AffectingVideoExtensions { get; set; } = new List<string> 
                                                             {
                                                                 // *** Video extensions ***
                                                                 ".webm", 
