@@ -47,3 +47,9 @@ imageSize = Helpers.GetSizeForUI(counter.OtherImageSizeCounter);
 Console.WriteLine($"-- Other Image files: {counter.OtherImageCounter}; Size: {imageSize.Item1:F} {imageSize.Item2}");
 videoSize = Helpers.GetSizeForUI(counter.OtherVideoSizeCounter);
 Console.WriteLine($"-- Other Video files: {counter.OtherVideoCounter}; Size: {videoSize.Item1:F} {videoSize.Item2}");
+
+Console.WriteLine();
+Console.WriteLine("*** Step 2: Organize ***");
+Console.WriteLine();
+
+organizer.Organize();
