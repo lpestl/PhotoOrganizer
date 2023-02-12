@@ -8,12 +8,13 @@ public static class Settings
     public static List<string> ImagePrefixes { get; set; } = new List<string>
                                                 {
                                                     // Photo
-                                                    "IMG_","IMG-","JPEG_","JPEG-","P_","P-","IMAG",".P_","____",
+                                                    "IMG_","IMG-","JPEG_","JPEG-","P_","P-","IMAG",".P_","____","SAM_",
+                                                    "DSC", "x_","__7A", "Фото", "P",
                                                 };
     public static List<string> VideoPrefixes { get; set; } = new List<string>
                                                 {
                                                     // Video
-                                                    "VID_","VID-","V_","V-","VIDEO",
+                                                    "VID_","VID-","V_","V-","VIDEO","Видео",
                                                 };
     public static List<string> AffectingImageExtensions { get; set; } = new List<string> 
                                                             {
