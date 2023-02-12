@@ -191,21 +191,10 @@ public class Organizer
                     case EMediaSubClassifier.NotMedia:
                         throw new DataException($"[ERROR] Image cannot be classified as Non-Media: {data.FileInfo.FullName}");
                     case EMediaSubClassifier.Other:
-                        newPath = Path.Combine(ScanDir.FullName, "Pictures", data.RelativePath);
-                        var otherPic = new FileInfo(newPath);
-                        if (otherPic.Directory != null && !Directory.Exists(otherPic.Directory.FullName))
-                            Directory.CreateDirectory(otherPic.Directory.FullName);
-                        if (!File.Exists(newPath))
-                            file.MoveTo(newPath);
+                        MoveToNewPath(data, "Pictures");
                         break;
                     case EMediaSubClassifier.Camera:
-                        newPath = Path.Combine(ScanDir.FullName, "Photo", $"{data.Date.Year}",
-                            $"{data.Date.Year}-{data.Date.Month:D2}");
-                        if (!Directory.Exists(newPath))
-                            Directory.CreateDirectory(newPath);
-                        newPath = Path.Combine(newPath, $"{file.Name}{file.Extension}");
-                        if (!File.Exists(newPath))
-                            file.MoveTo(newPath);
+                        MoveToNewPath(data, "CameraPhotos");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -217,37 +206,62 @@ public class Organizer
                     case EMediaSubClassifier.NotMedia:
                         throw new DataException($"[ERROR] Video cannot be classified as Non-Media: {data.FileInfo.FullName}");
                     case EMediaSubClassifier.Other:
-                        newPath = Path.Combine(ScanDir.FullName, "Videos", data.RelativePath);
-                        var otherVid = new FileInfo(newPath);
-                        if (otherVid.Directory != null && !Directory.Exists(otherVid.Directory.FullName))
-                            Directory.CreateDirectory(otherVid.Directory.FullName);
-                        if (!File.Exists(newPath))
-                            file.MoveTo(newPath);
+                        MoveToNewPath(data, "Videos");
                         break;
                     case EMediaSubClassifier.Camera:
-                        newPath = Path.Combine(ScanDir.FullName, "CamVideos", $"{data.Date.Year}",
-                            $"{data.Date.Year}-{data.Date.Month:D2}");
-                        if (!Directory.Exists(newPath))
-                            Directory.CreateDirectory(newPath);
-                        newPath = Path.Combine(newPath, $"{file.Name}{file.Extension}");
-                        if (!File.Exists(newPath))
-                            file.MoveTo(newPath);
+                        MoveToNewPath(data, "CameraVideos");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
                 break;
             case EFileClassifier.OtherFile:
-                newPath = Path.Combine(ScanDir.FullName, "Other", data.RelativePath);
-                var otherFile = new FileInfo(newPath);
-                if (otherFile.Directory != null && !Directory.Exists(otherFile.Directory.FullName))
-                    Directory.CreateDirectory(otherFile.Directory.FullName);
-                if (!File.Exists(newPath))
-                    file.MoveTo(newPath);
+                // NOTE: We do not affect files that do not fall under the affect conditions.
+                //MoveToNewPath(data, "OtherFiles");
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
+    }
+
+    private void MoveToNewPath(FileDataAnalysis data, string rootDirName)
+    {
+        var newPath = Path.Combine(ScanDir.FullName, rootDirName, 
+            $"{data.Date.Year}", $"{data.Date.Year}-{data.Date.Month:D2}");
+        if (!Directory.Exists(newPath))
+            Directory.CreateDirectory(newPath);
+        
+        var nameWithoutExtension = Path.GetFileNameWithoutExtension(data.FileInfo.FullName);
+        // // NOTE: Fix name
+        // var parts = newName.Split('.');
+        // newName = string.Empty;
+        // foreach (var part in parts)
+        // {
+        //     if (!newName.EndsWith(part))
+        //         newName += $".{part}";
+        // }
+        // newName = newName.Remove(0, 1);
+        // // NOTE: End fix
+
+        ulong i = 0;
+        string uniqName = nameWithoutExtension;
+        while (File.Exists(Path.Combine(newPath, $"{uniqName}{data.FileInfo.Extension}")))
+        {
+            var parts = nameWithoutExtension.Split('-');
+            if ((parts.Any() && (ulong.TryParse(parts.Last(), out i))))
+            {
+                uniqName = string.Empty;
+                for (int j = 0; j < parts.Length - 1; j++)
+                    uniqName += $"{parts[j]}-";
+                uniqName += $"{++i}";
+            }
+            else
+            {
+                uniqName = $"{nameWithoutExtension}-{++i}";
+            }
+        }
+        if (!File.Exists(Path.Combine(newPath, $"{uniqName}{data.FileInfo.Extension}")))
+            data.FileInfo.MoveTo(Path.Combine(newPath, $"{uniqName}{data.FileInfo.Extension}"));
     }
 
     #endregion

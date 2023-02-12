@@ -98,8 +98,11 @@ public static class BasicFileSystemCommands
                             (int.TryParse(monStr, out int mon)) &&
                             (int.TryParse(dateStr, out int date)))
                         {
-                            dateTime = new DateTime(year, mon, date);
-                            return true;
+                            if ((year > 1987) && (year < 2222))
+                            {
+                                dateTime = new DateTime(year, mon, date);
+                                return true;
+                            }
                         }
                     }
                 }
