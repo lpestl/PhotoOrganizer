@@ -51,5 +51,6 @@ public static class Settings
                                                                 ".mov",".qt",
                                                                 ".flv",".swf",
                                                                 ".avchd",
+                                                                ".3gp",
                                                             };
 }
