@@ -248,7 +248,7 @@ public class Organizer
         while (File.Exists(Path.Combine(newPath, $"{uniqName}{data.FileInfo.Extension}")))
         {
             var parts = nameWithoutExtension.Split('-');
-            if ((parts.Any() && (ulong.TryParse(parts.Last(), out i))))
+            if ((parts.Any() && (parts.Length > 1) && (ulong.TryParse(parts.Last(), out _))))
             {
                 uniqName = string.Empty;
                 for (int j = 0; j < parts.Length - 1; j++)
